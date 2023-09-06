@@ -23,8 +23,13 @@
 #include <utility>
 #include <vector>
 
+#if defined(USE_CUDA)
 #include <LightGBM/cuda/cuda_column_data.hpp>
 #include <LightGBM/cuda/cuda_metadata.hpp>
+#elif defined(USE_ROCM)
+#include <LightGBM/hip/cuda_column_data.hpp>
+#include <LightGBM/hip/cuda_metadata.hpp>
+#endif
 
 namespace LightGBM {
 
@@ -312,13 +317,13 @@ class Metadata {
   /*! \brief Disable copy */
   Metadata(const Metadata&) = delete;
 
-  #ifdef USE_CUDA
+  #if defined(USE_CUDA) || defined(USE_ROCM)
 
   CUDAMetadata* cuda_metadata() const { return cuda_metadata_.get(); }
 
   void CreateCUDAMetadata(const int gpu_device_id);
 
-  #endif  // USE_CUDA
+  #endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
  private:
   /*! \brief Load wights from file */
@@ -373,9 +378,9 @@ class Metadata {
   bool position_load_from_file_;
   bool query_load_from_file_;
   bool init_score_load_from_file_;
-  #ifdef USE_CUDA
+  #if defined(USE_CUDA) || defined(USE_ROCM)
   std::unique_ptr<CUDAMetadata> cuda_metadata_;
-  #endif  // USE_CUDA
+  #endif  // defined(USE_CUDA) || defined(USE_ROCM)
 };
 
 
@@ -964,13 +969,13 @@ class Dataset {
     return feature_groups_[feature_group_index]->feature_min_bin(sub_feature_index);
   }
 
-  #ifdef USE_CUDA
+  #if defined(USE_CUDA) || defined(USE_ROCM)
 
   const CUDAColumnData* cuda_column_data() const {
     return cuda_column_data_.get();
   }
 
-  #endif  // USE_CUDA
+  #endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
  private:
   void SerializeHeader(BinaryWriter* serializer);
@@ -1029,9 +1034,9 @@ class Dataset {
   /*! \brief mutex for threading safe call */
   std::mutex mutex_;
 
-  #ifdef USE_CUDA
+  #if defined(USE_CUDA) || defined(USE_ROCM)
   std::unique_ptr<CUDAColumnData> cuda_column_data_;
-  #endif  // USE_CUDA
+  #endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
   std::string parser_config_str_;
 };

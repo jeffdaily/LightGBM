@@ -6,7 +6,11 @@
 #ifndef LIGHTGBM_SAMPLE_STRATEGY_H_
 #define LIGHTGBM_SAMPLE_STRATEGY_H_
 
+#if defined(USE_CUDA)
 #include <LightGBM/cuda/cuda_utils.h>
+#elif defined(USE_ROCM)
+#include <LightGBM/hip/cuda_utils.h>
+#endif
 #include <LightGBM/utils/random.h>
 #include <LightGBM/utils/common.h>
 #include <LightGBM/utils/threading.h>
@@ -38,9 +42,9 @@ class SampleStrategy {
 
   std::vector<data_size_t, Common::AlignmentAllocator<data_size_t, kAlignedSize>>& bag_data_indices() { return bag_data_indices_; }
 
-  #ifdef USE_CUDA
+  #if defined(USE_CUDA) || defined(USE_ROCM)
   CUDAVector<data_size_t>& cuda_bag_data_indices() { return cuda_bag_data_indices_; }
-  #endif  // USE_CUDA
+  #endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
   void UpdateObjectiveFunction(const ObjectiveFunction* objective_function) {
     objective_function_ = objective_function;
@@ -72,10 +76,10 @@ class SampleStrategy {
   /*! \brief whether need to resize the gradient vectors */
   bool need_resize_gradients_;
 
-  #ifdef USE_CUDA
+  #if defined(USE_CUDA) || defined(USE_ROCM)
   /*! \brief Buffer for bag_data_indices_ on GPU, used only with cuda */
   CUDAVector<data_size_t> cuda_bag_data_indices_;
-  #endif  // USE_CUDA
+  #endif  // defined(USE_CUDA) || defined(USE_ROCM)
 };
 
 }  // namespace LightGBM

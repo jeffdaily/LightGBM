@@ -4,7 +4,7 @@
  * license information.
  */
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 
 #include <algorithm>
 
@@ -1803,4 +1803,4 @@ void CUDABestSplitFinder::LaunchInitCUDARandomKernel() {
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)

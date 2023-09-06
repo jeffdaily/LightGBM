@@ -9,7 +9,7 @@
 #include <memory>
 #include <vector>
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 
 #include "cuda_leaf_splits.hpp"
 #include "cuda_histogram_constructor.hpp"
@@ -137,7 +137,7 @@ class CUDASingleGPUTreeLearner: public SerialTreeLearner {
 
 }  // namespace LightGBM
 
-#else  // USE_CUDA
+#else  // defined(USE_CUDA) || defined(USE_ROCM)
 
 // When GPU support is not compiled in, quit with an error message
 
@@ -154,5 +154,5 @@ class CUDASingleGPUTreeLearner: public SerialTreeLearner {
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)
 #endif  // LIGHTGBM_TREELEARNER_CUDA_CUDA_SINGLE_GPU_TREE_LEARNER_HPP_

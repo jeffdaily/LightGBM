@@ -4,7 +4,7 @@
  * license information.
  */
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 
 #include "cuda_single_gpu_tree_learner.hpp"
 
@@ -515,4 +515,4 @@ void CUDASingleGPUTreeLearner::CheckSplitValid(
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)

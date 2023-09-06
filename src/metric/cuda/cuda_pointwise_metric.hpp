@@ -7,7 +7,7 @@
 #ifndef LIGHTGBM_METRIC_CUDA_CUDA_POINTWISE_METRIC_HPP_
 #define LIGHTGBM_METRIC_CUDA_CUDA_POINTWISE_METRIC_HPP_
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 
 #include <LightGBM/cuda/cuda_metric.hpp>
 #include <LightGBM/cuda/cuda_utils.h>
@@ -40,6 +40,6 @@ class CUDAPointwiseMetricInterface: public CUDAMetricInterface<HOST_METRIC> {
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
 #endif  // LIGHTGBM_METRIC_CUDA_CUDA_POINTWISE_METRIC_HPP_

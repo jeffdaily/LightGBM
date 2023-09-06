@@ -31,16 +31,10 @@ echo "waiting for all hipify-perl invocations to finish"
 wait
 
 echo "rewriting cuda to hip headers"
-for CUDA_DIR in $CUDA_DIRS
+for EXT in cpp h hpp hip
 do
-    for CUDA_FILE in $CUDA_DIR/*
+    for FILE in $(find ./src -name *.${EXT})
     do
-        HIP_FILE=$(echo $CUDA_FILE | sed s/cuda/hip/)
-        if [[ $HIP_FILE == *.cu ]]
-        then
-            HIP_FILE="${HIP_FILE%.cu}.hip"
-        fi
-        # also need to switch from cuda to hip headers
-        sed -i s@LightGBM/cuda@LightGBM/hip@g $HIP_FILE
+        sed -i s@LightGBM/cuda@LightGBM/hip@g $FILE
     done
 done

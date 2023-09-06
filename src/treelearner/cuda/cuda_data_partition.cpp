@@ -4,7 +4,7 @@
  * license information.
  */
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 
 #include <algorithm>
 #include <memory>
@@ -370,4 +370,4 @@ void CUDADataPartition::ResetByLeafPred(const std::vector<int>& leaf_pred, int n
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)

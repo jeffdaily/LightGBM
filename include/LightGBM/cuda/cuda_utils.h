@@ -6,7 +6,7 @@
 #ifndef LIGHTGBM_CUDA_CUDA_UTILS_H_
 #define LIGHTGBM_CUDA_CUDA_UTILS_H_
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <stdio.h>
@@ -191,6 +191,6 @@ static __device__ T SafeLog(T x) {
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
 #endif  // LIGHTGBM_CUDA_CUDA_UTILS_H_

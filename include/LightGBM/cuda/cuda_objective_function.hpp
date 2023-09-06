@@ -7,7 +7,7 @@
 #ifndef LIGHTGBM_CUDA_CUDA_OBJECTIVE_FUNCTION_HPP_
 #define LIGHTGBM_CUDA_CUDA_OBJECTIVE_FUNCTION_HPP_
 
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ROCM)
 
 #include <LightGBM/cuda/cuda_utils.h>
 #include <LightGBM/objective_function.h>
@@ -76,6 +76,6 @@ class CUDAObjectiveInterface: public HOST_OBJECTIVE {
 
 }  // namespace LightGBM
 
-#endif  // USE_CUDA
+#endif  // defined(USE_CUDA) || defined(USE_ROCM)
 
 #endif  // LIGHTGBM_CUDA_CUDA_OBJECTIVE_FUNCTION_HPP_

@@ -7,6 +7,7 @@
 #ifdef USE_CUDA
 
 #include <algorithm>
+#include <LightGBM/cuda/cuda_rocm_interop.h>
 
 #include "cuda_binary_objective.hpp"
 

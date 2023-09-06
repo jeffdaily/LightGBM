@@ -12,6 +12,10 @@
 
 #include <algorithm>
 
+#ifdef USE_ROCM
+#define atomicAdd_block atomicAdd
+#endif
+
 namespace LightGBM {
 
 __global__ void ReduceLeafStatKernel_SharedMemory(

@@ -12,6 +12,10 @@
 #include <random>
 #include <algorithm>
 
+#ifdef USE_ROCM
+#define atomicAdd_block atomicAdd
+#endif
+
 namespace LightGBM {
 
 template <bool MAX_ITEM_GREATER_THAN_1024, data_size_t NUM_RANK_LABEL>

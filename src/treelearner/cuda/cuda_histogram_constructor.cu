@@ -12,6 +12,10 @@
 
 #include <algorithm>
 
+#ifdef USE_ROCM
+#define atomicAdd_block atomicAdd
+#endif
+
 namespace LightGBM {
 
 template <typename BIN_TYPE, typename HIST_TYPE, size_t SHARED_HIST_SIZE>
